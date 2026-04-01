@@ -1,5 +1,7 @@
 import { cn } from '@/utils'
+import ProjectName from "@/components/project-name"
 
+// 서버 컴포넌트(Server Component) => 클라이언트 컴포넌트 (Client Component)
 export default function Page() {
   return (
     <div
@@ -26,7 +28,7 @@ export default function Page() {
         </h1>
       </header>
       <main>
-        
+        <ProjectName />
       </main>
     </div>
   )
