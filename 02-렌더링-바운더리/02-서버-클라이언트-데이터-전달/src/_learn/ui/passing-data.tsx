@@ -1,6 +1,19 @@
 import { readLikes } from '@/functions/likes-read-write'
 import LikeButton from './like-button'
 
+// 1. 서버 컴포넌트 - (READ) 요청 -> 서버 함수
+// 2. 서버 컴포넌트 <- (DATA) 요청 = 서버 함수
+// 3. 서버 컴포넌트 - (DATA) 전달 - 클라이언트 컴포넌트
+// 4. 클라이언트 컴포넌트 - 전달된 (DATA)로 상태 초기화
+// 5. 클라이언트 컴포넌트 <- 사용자 상호작용(click)
+// 6. 클라이언트 컴포넌트 - (UPDATE) 실행 -> 서버 함수 ('use server')
+// 7. 서버 함수 - (서버 환경) 실행 -> likes.json 파일 수정
+// 8. 서버 컴포넌트 - 렌더링 (SERVER) -> 클라이언트 컴포넌트에 Props 전달
+// 9. 클라이언트 컴포넌트 - 렌더링(server) -> HTML 생성, 전달 받은 Props를 토대로 JS 청크 생성
+// 10. JS 청크 - 전송 (Browser) -> 브라우저 실행 (Hydration, 수화)
+// 11. 서버 컴포넌트로 부터 전달된 데이터 값으로 React에 의해 메모리 상에서 관리
+
+
 export default async function PassingData() { // 서버 컴포넌트 (비동기 함수 사용 가능)
   
   // 서버 함수 readLikes()를 실행해 
