@@ -1,11 +1,10 @@
 import { cn } from '@/utils'
-import ProjectName from '@/components/project-name'
 import { ClientComponent, ServerComponent } from '@/_learn'
 
 // 서버 컴포넌트 (Server Component)
+// - 서버 컴포넌트
+// - 클라이언트 컴포넌트
 export default function MainPage() {
-
-  console.log('메인 페이지 컴포넌트')
 
   return (
     <div
@@ -33,8 +32,6 @@ export default function MainPage() {
       </header>
 
       <main>
-        {/* 클라이언트 컴포넌트 */}
-        <ProjectName />
         <ServerComponent />
         <ClientComponent />
       </main>

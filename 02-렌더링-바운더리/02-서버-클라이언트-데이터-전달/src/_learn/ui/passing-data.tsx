@@ -20,6 +20,7 @@ export default async function PassingData() { // 서버 컴포넌트 (비동기 
   // 결과 값을 클라이언트 컴포넌트에 전달
   const currentLikes = await readLikes()
 
+  const renderedTime = new Date().toISOString()
   return (
     <section className="flex flex-col items-center justify-center p-24">
       <div className="rounded-2xl border border-gray-100 bg-white p-10 shadow-xl">
@@ -34,10 +35,14 @@ export default async function PassingData() { // 서버 컴포넌트 (비동기 
           파일이 업데이트됩니다.
         </p>
 
+        {/* 클라이언트 컴포넌트에 데이터 전달(passing data)  */}
         <LikeButton initialLikes={currentLikes} />
 
         <p className="mt-6 font-mono text-xs text-gray-400">
           서버 사이드 데이터 = {currentLikes}
+        </p>
+        <p>
+          서버 렌더링 타임 = <time dateTime={renderedTime}>{renderedTime}</time>
         </p>
       </div>
     </section>

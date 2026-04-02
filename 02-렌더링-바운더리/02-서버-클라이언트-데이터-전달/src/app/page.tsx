@@ -1,10 +1,7 @@
 import PassingData from '@/_learn/ui/passing-data'
 import { cn } from '@/utils'
 
-export default function Page() {
-
-  // 서버 함수 readLike()를 실행해
-  // 
+export default function HomePage() {
   
   return (
     <div
@@ -26,12 +23,13 @@ export default function Page() {
             lang="en"
             className="inline-block -translate-y-2.5 text-xl text-slate-500"
           >
-           <PassingData />
+            Passing Data
           </span>
         </h1>
       </header>
+
       <main>
-        
+        <PassingData />
       </main>
     </div>
   )

@@ -12,8 +12,6 @@ export default function ServerComponent() {
   const secretKey = getSecretKey()
   // console.log(secretKey) // 오직 서버에서만 읽기 가능 (클라이언트에 노출 안됨 ❌)
 
-
-
   return (
     <section
       className={cn(
