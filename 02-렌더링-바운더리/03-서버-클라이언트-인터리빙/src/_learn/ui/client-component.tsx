@@ -1,5 +1,6 @@
 'use client'
 
+import {ServerComponent} from '@/_learn'
 import { useState } from 'react'
 import { MousePointerClick, Layers } from 'lucide-react'
 import { cn } from '@/utils'
@@ -112,7 +113,10 @@ export default function ClientComponent({ className, children }: Props) {
 
           {/* 서버에서 렌더링된 결과가 클라이언트 환경에서 문제없이 작동할 수 있도록 구멍(slot) 생성 */}
           {/* 클라이언트 컴포넌트 내부에 서버 컴포넌트를 에러 없이 렌더링하는 방법 - 인터리빙 */}
-          {children}
+          <ClientComponent>
+            {/* <slot></slot> <- props.children */}
+            <ServerComponent />
+          </ClientComponent>
         </div>
       </div>
     </section>
