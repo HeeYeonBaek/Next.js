@@ -1,3 +1,4 @@
+
 import { Users } from '@/_learn'
 import { cn } from '@/utils'
 
@@ -27,9 +28,9 @@ export default function MainPage() {
         </h1>
       </header>
 
-      <main>
+      <div>
         <Users />
-      </main>
+      </div>
     </div>
   )
 }
