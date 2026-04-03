@@ -10,7 +10,7 @@ import { cn } from '@/utils'
 
 const navItems = [
   { name: '아카이브', href: '/books', icon: BookOpen },
-  { name: '카테고리', href: '/categories', icon: Bookmark },
+  { name: '카테고리', href: '/category', icon: Bookmark },
   { name: '프로필', href: '/profile', icon: User },
 ]
 
@@ -19,12 +19,12 @@ export default function Navbar() {
 
   return (
     <nav
+      aria-label="메인 내비게이션"
       className={cn(
         'sticky top-0 z-50 w-full border-b transition-all duration-300',
         'border-foreground/10 bg-background/70 backdrop-blur-xl',
         'focus-within:bg-background/90'
       )}
-      aria-label="메인 내비게이션"
     >
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         <Link 
@@ -54,7 +54,9 @@ export default function Navbar() {
           className="flex items-center gap-1 sm:gap-2"
         >
           {navItems.map((item) => {
+            // 활성 링크 
             const isActive = pathname === item.href
+
             return (
               <li key={item.href}>
                 <Link
