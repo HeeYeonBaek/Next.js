@@ -6,7 +6,7 @@ import { cn } from '@/utils'
 
 import '@/styles/globals.css'
 // import Link from 'next/link'
-import Navbar from '@/_learn/ui/navbar'
+import Navbar from '@/components/ui/navbar'
 
 const notoSansKR = Noto_Sans_KR({ variable: '--font-noto' })
 
