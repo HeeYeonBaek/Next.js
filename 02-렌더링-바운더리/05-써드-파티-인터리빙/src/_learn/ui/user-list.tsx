@@ -1,15 +1,14 @@
 'use client'
 
+import { useQuery } from '@tanstack/react-query'
 import { ArrowRight, Mail, MapPinHouse, User } from 'lucide-react'
 
 import { cn } from '@/utils'
-import UserListSkeleton from './user-list-skeleton'
-import { useQuery } from '@tanstack/react-query'
 import { getUsers } from '../api/users'
+import UserListSkeleton from './user-list-skeleton'
 
 export function UserList() {
-
-  const { isPending, data, refetch } = useQuery({
+  const { isPending, data } = useQuery({
     queryKey: ['users'],
     queryFn: getUsers,
   })
@@ -19,9 +18,7 @@ export function UserList() {
   }
 
   return (
-    <>
-      <button type="button" className='border px-2 py-0.5 rounded-xl' onClick={() => refetch()}>refetch</button>
-      <ul className="grid gap-4" aria-label="사용자 목록">
+    <ul className="grid gap-4" aria-label="사용자 목록">
       {data?.users?.map((user) => (
         <li key={user.id}>
           <a
@@ -77,6 +74,5 @@ export function UserList() {
         </li>
       ))}
     </ul>
-    </>
   )
 }
