@@ -40,10 +40,13 @@ export default function BooksPage() {
       >
         {books.map((book) => {
           return (
-            // Soft Navigation
+            // Hard Navigation : <a> (외부 링크)
+            // Soft Navigation : <Link> (내부 링크)
             <Link
               key={book.isbn}
-              href={`/books/${book.isbn}`}
+              // href={`/books/${book.isbn}`}
+              // href={`/books/${book.title}`}
+              href={`/books/${book.pubdate}/${book.title}`}
               className={cn(
                 'px-2 pt-1 pb-1.5',
                 'text-foreground/80 hover:text-foreground font-medium',
