@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { LucideHome, LucideChevronRight } from 'lucide-react'
+import { LucideHome, LucideChevronRight, LucideFileText } from 'lucide-react'
 import { cn } from '@/utils'
 import { Fragment } from 'react/jsx-runtime'
 
@@ -13,34 +13,35 @@ export default async function FundamentalPage({ params }: PageProps<'/docs/[...s
   const decodedSubjects = subjects.map((subject) => decodeURIComponent(subject))
   // console.log(decodedSubjects)
 
+  // 학습 뎁스(depth)
+  const depth = decodedSubjects.length
+
   // 현재 페이지의 제목
   const lastSubjectTitle = decodedSubjects.at(-1)?.replace(/-/g, ' ')
 
   return (
-    <section className="w-full space-y-12">
+    <section className="space-y-12">
+      
       {/* 상대 경로 안내 (Breadcrumbs) */}
       <nav className="flex h-10 items-center gap-x-1 font-bold text-slate-400">
-        <Link
-          className={cn(
-            'flex shrink-0 items-center gap-x-1.5',
-             'transition-colors hover:text-blue-600',
-          )}
-          href='/docs/기초'
-        >
-          <LucideHome className="size-4" /> 학습 문서 홈
-        </Link>
+    
         {
           decodedSubjects.map((subject, index)=>{
-            const isLast = index === decodedSubjects.length - 1 
+            const isFirst = index === 0
+            const isLast = index === depth - 1 
             const href = `/docs/${subjects.slice(0, index + 1).join('/')}`
 
             return(
               <Fragment key={index}>
-                <LucideChevronRight className='size-3.5 shrink-0 text-slate-300' />
+                {isFirst 
+                ? (<LucideHome className='size-4'/>) 
+                : (<LucideChevronRight className='size-3.5 shrink-0 text-slate-300' />)}
+                
                 <Link href={href} className={cn(
                   'px-4 py-1 border rounded-full',
-                  isLast ? 
-                  'border-blue-600 bg-blue-600 text-white shadow-md'
+                  isFirst ? 'pl-2 pr-4' : 'px-4',
+                  isLast 
+                  ? 'border-blue-600 bg-blue-600 text-white shadow-md'
                   : 'border-transparent hover:bg-blue-50 hover:text-blue-500'
                 )}>{subject.replace(/-/g, ' ')}</Link>
               </Fragment>
@@ -49,7 +50,29 @@ export default async function FundamentalPage({ params }: PageProps<'/docs/[...s
         }
       </nav>
 
-      <h1 className='text-4xl font-black'>{lastSubjectTitle}</h1>
+    {/* 페이지 헤더 */}
+      <header className='space-y-5'>
+        <div className={cn(
+          'inline-flex items-center gap-2', 
+          'rounded-full border border-blue-300 bg-blue-50',
+          'px-3 py-1 text-xs font-black -tracking-wide text-blue-600'
+        )}>
+        <LucideFileText className='size-3.5'/>
+        <span>학습 단계 {depth} / 3</span>
+      </div>
+      <h1 className={cn(
+        'text-5xl font-black tracking-tighter', 
+        'text-slate-900 md:text-6xl',
+      )}>
+        {lastSubjectTitle}
+        </h1>
+      <p className={cn(
+        'max-w-2xl text-xl leading-relaxed',
+         'font-medium text-slate-500',
+      )}>
+        {lastSubjectTitle}에 대한 심화 학습을 위해 아래 하위 주제를 선택하세요.
+      </p>
+      </header>
     </section>
   )
 }
