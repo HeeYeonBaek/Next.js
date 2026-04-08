@@ -1,4 +1,5 @@
 'use client'
+
 import { useEffect, useState } from 'react'
 import { LucideMousePointer2 } from 'lucide-react'
 
@@ -8,10 +9,10 @@ import { PrintError } from '@/components/ui/print-error'
 import { Spinner } from '@/components/ui/spinner'
 import { isErrorObject } from '@/utils'
 
-// 클라이언트 측 데이터 페칭 : SWR 라이브러리 (Vercel)
+// 클라이언트 측 데이터 페칭: SWR 라이브러리 (Vercel)
 
 export default function ClientSidePage() {
-
+  
   const [data, setData] = useState<Pokemon[] | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
