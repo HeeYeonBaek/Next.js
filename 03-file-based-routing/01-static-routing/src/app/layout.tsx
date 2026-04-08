@@ -5,8 +5,8 @@ import { QueryProvider } from '@/contexts/query-context'
 import { cn } from '@/utils'
 
 import '@/styles/globals.css'
-// import Link from 'next/link'
 import Navbar from '@/components/ui/navbar'
+import SiteInfo from '@/components/ui/site-info'
 
 const notoSansKR = Noto_Sans_KR({ variable: '--font-noto' })
 
@@ -37,18 +37,12 @@ export const metadata: Metadata = {
           └── page.tsx   
 */
 
-
-
-// React Router (Single Page Application: CRS, UX)
+// React Router (Single Page Application : CSR, UX)
 
 // SSR (Application, UX)
-
 // Client-side Transition (CSR + SSR) / RSC Payload (Chunk)
 
 export default function RootLayout({ children }: React.PropsWithChildren) {
-  
-  
-  
   return (
     <html lang="ko-KR">
       <body
@@ -64,43 +58,9 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
         )}
       >
         <QueryProvider hideDevtools>
-
-          <header className="bg-slate-50 p-5">
-            {/* <nav aria-label="메인 내비게이션" className="flex flex-row gap-5">
-             
-             <Link href="/">
-              <img src="/next-js.svg" alt="Next.js" className='size-7' />
-             </Link>
-              <ul className="flex flex-row gap-5">
-                <li>
-                  <Link href="/books">책 리스트</Link>
-                </li>
-                <li>
-                  <Link href="/books/best">베스트셀러</Link>
-                </li>
-                <li>
-                  <Link href="/category">카테고리 페이지</Link>
-                </li>
-                <li>
-                  <Link href="/category/novel">소설</Link>
-                </li>
-                <li>
-                  <Link href="/profile">프로필 페이지</Link>
-                </li>
-              </ul>
-            </nav> */}
-            <Navbar />
-          </header>
-
+          <Navbar />
           <main className={cn('container mx-auto grow')}>{children}</main>
-
-          <footer className="flex justify-center bg-slate-100 p-7">
-            <small lang="en" className="text-sm font-medium">
-              {/* 저작권 등 사이트 정보 */}
-              &copy; {new Date().getFullYear()} Copylight All Reserved.
-            </small>
-          </footer>
-
+          <SiteInfo />
         </QueryProvider>
       </body>
     </html>

@@ -3,7 +3,6 @@ import { cn } from '@/utils'
 interface Props {
   title: string
   description: string
-  children? : React.ReactNode
 }
 
 export default function PageSectionTitle({ title, description }: Props) {
