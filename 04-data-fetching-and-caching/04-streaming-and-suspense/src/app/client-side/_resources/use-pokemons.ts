@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Pokemon } from "@/types/pokemon"
-import { isErrorObject } from "@/utils"
+import { isErrorObject, wait } from "@/utils"
 
 export const usePokemons = () => {
   const [data, setData] = useState<Pokemon[] | null>(null)
@@ -14,6 +14,8 @@ export const usePokemons = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true)
+
+        await wait(1000)
 
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_MOCK_API_URL}/pokemon`,
