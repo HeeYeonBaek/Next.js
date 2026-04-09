@@ -85,7 +85,7 @@ export function Navbar() {
                 isStreamingActive ? 'text-rose-600' : 'text-slate-400',
               )}
             />
-            <span>부분 렌더링-PR</span>
+            <span>클라이언트 사이드 PR</span>
           </Link>
         </div>
       </div>
