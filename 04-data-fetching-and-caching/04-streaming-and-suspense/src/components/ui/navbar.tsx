@@ -1,6 +1,6 @@
 'use client'
 
-import { LucideMousePointer2, LucideZap } from 'lucide-react'
+import { LucideMousePointer2, LucideZap, LucideMousePointerClick } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
@@ -68,6 +68,24 @@ export function Navbar() {
               )}
             />
             <span>서버 스트리밍</span>
+          </Link>
+          {/* 부분 렌더링 링크 */}
+          <Link
+            href="/partial-rendering"
+            className={cn(
+              'flex items-center gap-1.5 rounded-full border px-4 py-2 transition-all duration-200',
+              isStreamingActive
+                ? 'border-rose-100 bg-rose-50 text-rose-600 shadow-sm'
+                : 'border-transparent text-slate-500 hover:bg-rose-50/50 hover:text-rose-600',
+            )}
+          >
+            <LucideMousePointerClick
+              className={cn(
+                'h-4 w-4',
+                isStreamingActive ? 'text-rose-600' : 'text-slate-400',
+              )}
+            />
+            <span>부분 렌더링-PR</span>
           </Link>
         </div>
       </div>

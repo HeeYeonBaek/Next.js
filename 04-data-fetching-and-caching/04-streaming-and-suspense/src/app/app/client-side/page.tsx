@@ -2,7 +2,7 @@
 
 import { LucideInfo, LucideMousePointer2 } from 'lucide-react'
 
-// import { Spinner } from '@/components/ui/spinner'
+import { Spinner } from '@/components/ui/spinner'
 import { usePokemons } from './_resources/use-pokemons'
 import { PokemonSkeleton } from './_resources/pokemon-skeleton'
 import { PokemonList } from './_resources/pokemon-list'
@@ -12,7 +12,7 @@ export default function ClientComponentPage() {
   const { isLoading, pokemons, error } = usePokemons()
 
   // 페이지 전체 로딩 처리
-  //if (isLoading) return <Spinner>포켓몬 데이터 로딩 중...</Spinner>
+  if (isLoading) return <Spinner>포켓몬 데이터 로딩 중...</Spinner>
 
   return (
     <section className="m-6 space-y-6 md:mx-0">
@@ -27,7 +27,7 @@ export default function ClientComponentPage() {
         </p>
       </header>
 
-      {/* 상태에 따른 조건부 렌더링 */}
+      {/* 상태에 따른 조건부 렌더링 : 부분 렌더링 (스트리밍) */}
       <div className="min-h-100">
         {isLoading ? (
           <PokemonSkeleton count={6} />
