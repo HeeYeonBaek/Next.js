@@ -7,10 +7,14 @@ import {
 } from 'lucide-react'
 
 import { cn } from '@/utils'
+import { Suspense } from 'react'
+import { Spinner } from '@/components/ui/spinner'
+import { cacheLife, cacheTag, updateTag } from 'next/cache'
 
 export default function CacheControlPage() {
   return (
     <section className="mx-auto max-w-4xl space-y-10 p-6">
+      {/* Static */}
       <header className="space-y-3">
         <div className="flex items-center gap-2 text-emerald-600">
           <LucideShieldCheck className="h-7 w-7" />
@@ -24,12 +28,36 @@ export default function CacheControlPage() {
       </header>
 
       <div className="grid grid-cols-1 gap-8">
-        <ShortLivedSection />
-        <TaggedDataSection />
+        {/* Dynamic */}
+        <Suspense fallback={<Spinner />}>
+          <ShortLivedSection />
+        </Suspense>
+        {/* Dynamic */}
+        <Suspense fallback={<Spinner />}>
+          <TaggedDataSection />
+        </Suspense>
       </div>
 
+      {/* Static */}
       <div className="flex justify-center pt-4">
-        <form action="/cache-control">
+        {/* 
+          1. 전통적인 웹 방식 : JavaScript 없던 시절 (서버 경계)
+
+            <form action="server-program-url">
+              ...
+              <button type="submit">전송</button>
+            </form>  
+
+
+          2. AJAX 방식 : JavaScript 사용되는 현재 시점 (상태 제어가 가능한 클라이언트 경계)
+            'use client'
+
+            <form onSubmit={(e) => e.preventDefault()}>
+              <button type="submit">전송</button>
+            </form>
+        */}
+        {/* server action */}
+        <form action={updateProfileCache}>
           <button
             type="submit"
             className={cn(
@@ -45,6 +73,7 @@ export default function CacheControlPage() {
         </form>
       </div>
 
+      {/* Static */}
       <article
         className={cn(
           'flex gap-4 rounded-2xl border border-amber-100 bg-amber-50 p-6',
@@ -66,12 +95,26 @@ export default function CacheControlPage() {
   )
 }
 
+/* [서버 액션] ------------------------------------------------------------------ */
+
+const updateProfileCache = async () => {
+  'use server' // 이 코드는 "서버에서 실행되는 함수야" 선언
+
+  // 태그 이름을 가진 캐시 업데이트 로직
+  // revalidateTag('user-profile', 'default') ❌
+  updateTag('user-profile')
+
+}
+
 /* [데이터 로직] ----------------------------------------------------------------- */
 
 // [시간 기반 캐싱]
 // - 특정 시간이 지나면 자동으로 캐시가 만료됨
 // - 수명이 짧은 캐시 (예: 실시간 시세 등)
 async function getShortLivedData() {
+  'use cache'
+  cacheLife('seconds')
+
   return new Date().toLocaleTimeString()
 }
 
@@ -79,6 +122,9 @@ async function getShortLivedData() {
 // - 특정 이름(태그)을 붙여두고, 필요할 때 수동으로 무효화함
 // - 태그가 지정된 캐시 (예: 사용자 프로필 등)
 async function getTaggedData() {
+  'use cache'
+  cacheTag('user-profile')
+
   return {
     time: new Date().toLocaleTimeString(),
     tag: 'user-profile',
