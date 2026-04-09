@@ -1,5 +1,0 @@
-export * from './isErrorObject'
-export * from './debounce'
-export * from './throttle'
-export * from './wait'
-export * from './cn'
