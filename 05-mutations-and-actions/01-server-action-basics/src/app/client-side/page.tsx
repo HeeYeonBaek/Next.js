@@ -10,20 +10,58 @@ import {
 
 import { useInput } from '@/hooks'
 import { cn } from '@/utils'
+import { useState, useTransition } from 'react'
+import { createItemAction } from '@/actions/create-item-action'
 
 export default function ClientSidePage() {
+
   
-  // 폼 상태를 클라이언트 측 메모리에 관리해보세요.
-  const message = ''
-  const isPending = false
-  const error = null
 
-  const itemInput = useInput('')
-  const isNotInput = itemInput.props.value.trim().length === 0
+// 폼 상태를 클라이언트 측 메모리에 관리해보세요.
+const [isPending, startTransition] = useTransition() // 서버 액션 요청 (로딩 상태 관리, 렌더링)
+const [message, setMessage] = useState('') // 서버에서 성공 응답이 왔을 때 상태 업데이트 -> UI 반영 (성공 메시지)
+const [error, setError] = useState<undefined|string>(undefined) // 서버에서 실패 응답이 왔을 때 상태 업데이트 -> UI 반영 (에러 메시지)
 
-  // 서버 액션을 클라이언트 핸들러 내부에서 실행하는 코드를 작성하고
-  // 응답 성공 또는 실패 상황에 따라 UI 화면을 제공하도록 설정합니다.
+const itemInput = useInput('')
+const isNotInput = itemInput.props.value.trim().length === 0
 
+// 서버 액션을 클라이언트 핸들러 내부에서 실행하는 코드를 작성하고
+// 응답 성공 또는 실패 상황에 따라 UI 화면을 제공하도록 설정합니다.
+const handleAction = (formData: FormData) => {
+
+
+  if(isPending || isNotInput) return // 방어적 프로그램
+
+
+  // 서버 함수를 여기서 실행
+  startTransition(async ()=>{
+    const result = await createItemAction(formData)
+     
+    if(result.success){
+      // 서버의 응답 결과가 성공했을 때
+      setMessage(result.message ?? '요청이 성공적으로 수행되었습니다.')
+     }else{
+      // 응답 결과가 실패 했을 때
+      setError(result.error ?? '알 수 없는 에러가 발생했습니다.')
+     }
+  })
+}
+ 
+
+// 입력 폼 초기화 함수
+const handleReset = () =>{
+  // 방법1. 브라우저 API를 사용해 페이지를 새로고침(하드 네비게이션)
+  // window.location.reload()
+   // 방법2. 리액트 방식으로 컴포넌트 초기화
+  setError(undefined)
+  setMessage('')
+  itemInput.methods.reset()
+  itemInput.methods.focus()
+  setTimeout(()=>{
+    itemInput.methods.reset()
+    setTimeout(()=>itemInput.methods.focus, 50)
+  })
+}
   return (
     <div className="flex grow items-center justify-center p-4">
       <div
@@ -68,6 +106,7 @@ export default function ClientSidePage() {
               // ...
               className="relative z-10 space-y-4"
               noValidate
+              action={handleAction}
             >
               <div className="space-y-2">
                 <input
@@ -139,6 +178,7 @@ export default function ClientSidePage() {
                 )}
                 // 폼 초기화 로직을 실행하는 핸들러를 연결해보세요.
                 // ...
+                onClick={handleReset}
               >
                 새로운 아이템 추가
               </button>
