@@ -2,8 +2,14 @@
 
 import { wait } from "@/utils"
 
+export interface FormState{
+  success: boolean
+  message? : string
+  error?: string
+}
+
 // 서버함수(또는 액션)
-export async function createItemAction(fomData: FormData){
+export async function createItemAction(fomData: FormData): Promise<FormState>{
   // 사용자 입력 데이터 추출
   const title = fomData.get('title')?.toString().trim()
   try {
